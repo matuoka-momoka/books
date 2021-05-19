@@ -1,4 +1,10 @@
 <h2>Editing Book</h2>
+<% if @book.errors.any? %>
+      error
+  <% @book.errors.full_messages.each do |message| %>
+    <%= message %><br>
+  <% end %>
+<% end %>
 <!-- form_with部分 -->
 <%= form_with model:@book, local: true do |f| %>
 <h5>Title</h5>
@@ -7,7 +13,7 @@
   <%= f.text_field :body %>
   <h5><%= f.submit 'Update Book' %></h5>
 
-<h5><%= link_to "Show", edit_book_path %>
+<h5><%= link_to "Show", book_path(@book) %>
 |
 <%= link_to "Back", books_path %></h5>
 

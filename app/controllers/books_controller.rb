@@ -15,6 +15,7 @@ end
 
  def edit
     @book = Book.find(params[:id])
+
  end
 
 
@@ -24,23 +25,29 @@ end
     if @book.save
         flash[:notice] = "Book was successfully created."
         redirect_to book_path(@book)
-
     else
-        redirect_to book_path(book)
-        render :new
+    @books = Book.all
+        render :index
     end
   end
 
 
   def update
-    book = book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(list.id)
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+        flash[:notice] = "Book was successfully created."
+        redirect_to :book
+
+    else
+      render:edit
+    end
   end
 
   def destroy
-     book = Book.find(books.id)
-    book.destroy
+     book = Book.find(params[:id])
+     book.destroy
+      flash[:notice] = "Book was successfully destroyed."
+      redirect_to books_path
 
   end
 
@@ -49,6 +56,4 @@ end
   def book_params
     params.require(:book).permit(:title, :body)
   end
-
- end
-
+end
